@@ -1,0 +1,13 @@
+DEBUG_MODE: true
+
+CRONTAB:
+    USER: cedric
+
+WATER_SENSOR:
+    IN_GPIO_W: 16
+    OUT_GPIO_W: 26
+    WATERLVL_VALUE: false  # will only be used if debug mode is on.
+
+PUMP_CONTROL:
+    MAX_TIME_ON: 10
+    RELAIS_1_GPIO: 20

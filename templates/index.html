@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Watersystem</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="{{ url_for('static', filename='jquery-3.3.1.js') }}"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+      <link rel="stylesheet" href="/static/tab.css">
+  </head>
+<body>
+<div class="tab">
+  <button class="tablinks active" onclick="openTab(event, 'Pump Control')">Pump Control</button>
+  <button class="tablinks" onclick="openTab(event, 'Scheduler')">Scheduler</button>
+  <button class="tablinks" onclick="openTab(event, 'Log Viewer')">Log Viewer</button>
+</div>
+
+<div id="Pump Control" class="tabcontent" style="display: block">
+  <p id="waterlvl_message" style="display: none">Water level critical: pump control deactivated!</p>
+  <button type="button" class="btn btn-primary" id="my_button" disabled="disabled"> Click here<div id="ProgressBar">
+<div id="ProgressBarPercentage"></div></div></button>
+  <p> pump is running <span id="resBtnHere">wait</span> </p>
+</div>
+
+<div id="Scheduler" class="tabcontent">
+<div id="warning_label", style="display: none">Not a valid watersystem job!</div>
+  <div id="job_input_form_div" style="display: none;">
+    <form id="job_input_form"> 
+      <label for="active_" class="form-label">Active</label>
+      <input type="checkbox" id="active_" name="active" value="active"><br>
+      <label for="duration" class="form-label">Duration</label><br>
+      <input type="text" id="duration" name="duration"><br>
+      <label for="m" class="form-label">Minutes</label><br>
+      <input type="text" id="m" , name="minute"><br>
+      <label for="h" class="form-label">Hour</label><br>
+      <input type="text" id="h" name="hour"><br>
+      <label for="dom" class="form-label">Day of Month</label><br>
+      <input type="text" id="dom" name="dom"><br>
+      <label for="mon" class="form-label">Month</label><br>
+      <input type="text" id="mon" name="mon"><br>
+      <label for="dow" class="form-label">Day of Week</label><br>
+      <input type="text" id="dow" name="dow"><br>
+      <input type="hidden" id="row_index" name="row_index" value="new">
+      <div class="form_button_container">
+      <input type="submit" value="submit" id="submit_form">
+      <input type="button" id="cancel_form" value="cancel">
+      </div>
+    </form>
+  </div>
+  <div class="scheduler_table_div">
+     <table id="schedule_table", class="schedule_table"></table>
+  </div>
+  <button type="button" class="btn btn-primary" id="add_job_button"> Add Job</button>
+</div>
+
+<div id="Log Viewer" class="tabcontent">
+  <div class="table_div">
+    <div>
+      <table id="logger_list" class="log_table"></table>
+    </div>
+    <div class="tab_buttons">
+      <button class="list_button" id="next_bttn" style="float: left;">next ></button>
+      <button class="list_button" id="prev_bttn" style="display: none"> < prev </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='manual.js') }}"></script>
+</body>
+</html>
