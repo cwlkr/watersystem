@@ -30,7 +30,7 @@ class WaterLevelSensor():
         else:
             GPIO.output(self.OUT_GPIO_W, GPIO.HIGH)
             res = []
-            for gpio in self.OUT_GPIO_W:
+            for gpio in self.IN_GPIO_W:
                 time.sleep(0.01)
                 res.append(GPIO.input(gpio))
                 time.sleep(0.01)
