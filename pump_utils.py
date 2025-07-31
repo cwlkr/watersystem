@@ -35,7 +35,7 @@ class WaterLevelSensor():
                 res.append(GPIO.input(gpio))
                 time.sleep(0.01)
             GPIO.output(self.OUT_GPIO_W, GPIO.LOW)
-            water_lvl_perc =  (sum(res)-1)/(len(self.IN_GPIO_W))
+            water_lvl_perc =  100/(len(self.IN_GPIO_W)-1) * (sum(res)-1)
             if water_lvl_perc == 0:
                 water_lvl_perc = 5
             if water_lvl_perc == -0.25:
