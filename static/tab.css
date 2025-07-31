@@ -12,7 +12,30 @@ body {font-family: Arial;}
 .tab_buttons{
  overflow: auto;
 }
+#tank_bar_outer{
+  border-radius: 4px;
+  color: #000 !important;
+  background-color: #f1f1f1 !important;
+  max-width: 200px;
+  height: 20px;
+}
 
+#watertank_lvl{
+  width: 0%;
+  height: 20px;
+  color: #fff !important;
+  background-color: rgb(33, 150, 243) !important;
+  border-radius: 4px;
+}
+
+#watertank_lvl_div{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-right: 0px;
+  margin-left: 0px;
+  max-width: 200px;
+  overflow: hidden;
+}
 .list_button{
   float: left;
   overflow: auto;

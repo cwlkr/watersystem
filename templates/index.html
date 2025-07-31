@@ -8,7 +8,6 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
       <link rel="stylesheet" href="/static/tab.css">
   </head>
 <body>
@@ -19,10 +18,17 @@
 </div>
 
 <div id="Pump Control" class="tabcontent" style="display: block">
+  <div id="watertank_lvl_div">
+    <p>Watertank fill level</p>
+    <div id="tank_bar_outer">
+      <div id="watertank_lvl"></div>
+    </div>
+  </div>
   <p id="waterlvl_message" style="display: none">Water level critical: pump control deactivated!</p>
-  <button type="button" class="btn btn-primary" id="my_button" disabled="disabled"> Click here<div id="ProgressBar">
-<div id="ProgressBarPercentage"></div></div></button>
-  <p> pump is running <span id="resBtnHere">wait</span> </p>
+  <button type="button" class="btn btn-primary" id="my_button" disabled="disabled"> Click here</button>
+  <div>
+    <p> pump is running <span id="resBtnHere">wait</span> </p>
+    </div>
 </div>
 
 <div id="Scheduler" class="tabcontent">

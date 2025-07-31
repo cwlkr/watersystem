@@ -3,6 +3,10 @@
 
 # C extensions
 *.so
+*.save
+*.save.*
+.cache.sqlite
+.manual.js.swp
 
 # Distribution / packaging
 .Python

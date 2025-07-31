@@ -18,7 +18,10 @@ class WaterLevelSensor():
         self.debug_value = debug_value
     
     def set_up_gpio(self):
-        GPIO.setup(self.IN_GPIO_W, GPIO.IN)
+        if type(self.IN_GPIO_W) is not list:
+            self.IN_GPIO_W = [self.IN_GPIO_W]
+        for gpio in self.IN_GPIO_W:
+            GPIO.setup(gpio, GPIO.IN)
         GPIO.setup(self.OUT_GPIO_W, GPIO.OUT)
 
     def check_water_level(self):
@@ -26,15 +29,25 @@ class WaterLevelSensor():
             return self.debug_value
         else:
             GPIO.output(self.OUT_GPIO_W, GPIO.HIGH)
-            res = GPIO.input(self.OUT_GPIO_W)
+            res = []
+            for gpio in self.OUT_GPIO_W:
+                time.sleep(0.01)
+                res.append(GPIO.input(gpio))
+                time.sleep(0.01)
             GPIO.output(self.OUT_GPIO_W, GPIO.LOW)
-            return bool(res)
+            water_lvl_perc =  (sum(res)-1)/(len(self.IN_GPIO_W))
+            if water_lvl_perc == 0:
+                water_lvl_perc = 5
+            if water_lvl_perc == -0.25:
+                water_lvl_perc == 0
+            return water_lvl_perc
 
     def check_water_with_delay(self):
-        if self.check_water_level():
-            return True
+        res = self.check_water_level()
+        if res:
+            return res
         else:
-            time.sleep(1)
+            time.sleep(0.01)
             return self.check_water_level()
 
 class cleanGPIO:

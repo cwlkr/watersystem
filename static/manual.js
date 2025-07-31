@@ -15,14 +15,32 @@ socket.on('waterlevel_update', function(x) {
 });
 
 $.get("/get_pump_status", //, async=false,
-          function(x) {
+  function(x) {
           $("#resBtnHere").html(x.toString());
           current_pump_status = x
+          $.get("get_waterlvl", function(y){
+            handle_waterlvl_event(y);
+            }
+          )
     }
    )
 
-function handle_waterlvl_event(has_water){
-  if ((!has_water) && (current_pump_status==false)){
+function handle_waterlvl_event(water_lvl_perc){
+  console.log(water_lvl_perc)
+  if (water_lvl_perc == 0){
+      $("#watertank_lvl").css("width", "5" + "%")
+      $('#tank_bar_inner').each(function () {
+        this.style.setProperty( 'background-color', '#f44336', 'important' );
+      });
+
+    } else {
+      $("#watertank_lvl").css("width", water_lvl_perc + "%")
+      $('#tank_bar_inner').each(function () {
+        this.style.setProperty( 'background-color', '#2196F3', 'important' );
+      });
+
+  }
+  if ((water_lvl_perc==0) && (current_pump_status==false)){
     $("#waterlvl_message").css("display", "block");
     $("#my_button").attr('disabled','disabled');
    }
@@ -31,11 +49,6 @@ function handle_waterlvl_event(has_water){
     $("#my_button").removeAttr('disabled');
   }
 }
-
-$.get("get_waterlvl", function(x){
-   handle_waterlvl_event(x);
-   }
- )
 
 var cron_jobs;
 $.get("/cron_jobs",
