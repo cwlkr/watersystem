@@ -12,30 +12,7 @@ body {font-family: Arial;}
 .tab_buttons{
  overflow: auto;
 }
-#tank_bar_outer{
-  border-radius: 4px;
-  color: #000 !important;
-  background-color: #f1f1f1 !important;
-  max-width: 200px;
-  height: 20px;
-}
 
-#watertank_lvl{
-  width: 0%;
-  height: 20px;
-  color: #fff !important;
-  background-color: rgb(33, 150, 243) !important;
-  border-radius: 4px;
-}
-
-#watertank_lvl_div{
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-right: 0px;
-  margin-left: 0px;
-  max-width: 200px;
-  overflow: hidden;
-}
 .list_button{
   float: left;
   overflow: auto;
@@ -45,23 +22,9 @@ body {font-family: Arial;}
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;  
-}
-#ProgressBar {
-  border-radius: 4px;
-  height: 50px;
-  overflow: hidden;
-  margin: -2px -5px;
-  background-color: rgb(0, 255, 0);
+  background-color: #f1f1f1;
 }
 
-#ProgressBarPercentage {
- height: 50px;
- border-radius: 4px;
- background-color: rgb(255, 0, 0);
- overflow: hidden;
- width:0%;
-}
 /* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
@@ -91,9 +54,11 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
-.form_button_container{
+
+.form_button_container {
   margin-top: 0.5%;
 }
+
 table, th, td {
   border: 1px solid;
   padding-left: 5px;

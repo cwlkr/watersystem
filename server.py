@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, emit
 import atexit
 from pump_utils import Pump, PumpObserver, ProtectedPumpSwitch, cleanGPIO, WaterLevelSensor, SwitchObserver
 import crontab_utils
-from config_loader import load_config
+from config import config
 from flask_login import login_required, LoginManager, current_user, UserMixin, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -17,7 +17,7 @@ USERS={'cedric': hash}
 def get_user(username):
     if not username in USERS:
         return None
-    else:
+    else: 
         return User(username, USERS.get(username))
 
 class User(UserMixin):
@@ -42,8 +42,6 @@ app.config['SECRET_KEY'] = secret_code()
 socketio = SocketIO(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-config = load_config(debug=app.config['DEBUG'])
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -145,6 +143,7 @@ def get_time_out_value():
 def cleanup_handler():
     with cleanGPIO():
         pump.stop()
+
 pump = Pump(config["PUMP_CONTROL"]["RELAIS_1_GPIO"], debug=config["DEBUG_MODE"])
 pump.register(PumpObserver(app))
 pump_controller = ProtectedPumpSwitch(pump, max_time_on=config["PUMP_CONTROL"]["MAX_TIME_ON"])
@@ -157,7 +156,6 @@ waterlvl_sensor = WaterLevelSensor(
                                    config['DEBUG_MODE']
                                    )
 pump_controller.register(SwitchObserver(waterlvl_sensor, app))
-
 # add if main
 if __name__ == '__main__':
     socketio.run(app)

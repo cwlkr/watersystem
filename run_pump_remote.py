@@ -14,26 +14,26 @@ _MAX_SCHEDULABLE_ON_TIME = 4
 _MIN_SCHEDULABLE_ON_TIME = 0.016
 
 def check_waterlvl():
-    request = requests.get("http://localhost:5000/get_waterlvl")
+    request = requests.get("http://192.168.0.25/get_waterlvl")
     if request.status_code == 200:
         return request.json()
     else:
         raise requests.exceptions.ConnectionError
-    
+
 def wait_for_pump_off(runtime):
     start_time = time.time()
     event, data = sio.receive(timeout=runtime+1)
     while not (event == 'updated_pump_state' and not data):
         event, data = sio.receive(timeout=runtime+1)
-    return round(time.time()- start_time, 1)
+    return round(time.time() - start_time, 0)
 
 def main(args):
-    runtime = args.time*60
+    runtime = int(args.time*60)
     logging.info(f'Started Watersystem. Planned on time: {args.time} minutes')
     if check_waterlvl() or args.force:
         excepted_run_time = sio.call('switch_pump_on_with_timeout', runtime, timeout=10)['timed']
         time_run = wait_for_pump_off(excepted_run_time)
-        if time_run == round(runtime, 1):
+        if time_run == round(runtime, 0):
             logging.info(f'Watersystem finished successfully')
         elif time_run == excepted_run_time:
             logging.info(f'Watersystem terminated by server after {round(time_run/60,1)} minutes, due to max_time_on')
@@ -45,7 +45,7 @@ def main(args):
         logging.warning('Watertank appears to be empty. Run apported')
 
 def initialize_logger():
-    handlers = [RotatingFileHandler(filename='./watersys_cron.log',
+    handlers = [RotatingFileHandler(filename='/home/ws/watersys_server/watersys_cron.log',
                                  backupCount=4,
                                  maxBytes=20000)]
     if args.verbose:
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     sio = socketio.SimpleClient()
     
     try:
-        sio.connect('ws://localhost:5000')
+        sio.connect('http://192.168.0.25:80')
     except socketio.exceptions.ConnectionError:
         logging.error('Watersystem not started, as server cannot be reached. Is server down?')
         sys.exit(1)

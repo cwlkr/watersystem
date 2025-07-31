@@ -7,40 +7,21 @@ socket.on('connect', function() {
 
 socket.on('updated_pump_state', function(x){
 	$("#resBtnHere").html(x.toString());
-        current_pump_status = x;
 })
 
 socket.on('waterlevel_update', function(x) {
   handle_waterlvl_event(x)
 });
 
-$.get("/get_pump_status", //, async=false,
-  function(x) {
-          $("#resBtnHere").html(x.toString());
+$.get("/get_pump_status",
+          function(x) {
           current_pump_status = x
-          $.get("get_waterlvl", function(y){
-            handle_waterlvl_event(y);
-            }
-          )
+          $("#resBtnHere").html(x.toString());
     }
    )
 
-function handle_waterlvl_event(water_lvl_perc){
-  console.log(water_lvl_perc)
-  if (water_lvl_perc == 0){
-      $("#watertank_lvl").css("width", "5" + "%")
-      $('#tank_bar_inner').each(function () {
-        this.style.setProperty( 'background-color', '#f44336', 'important' );
-      });
-
-    } else {
-      $("#watertank_lvl").css("width", water_lvl_perc + "%")
-      $('#tank_bar_inner').each(function () {
-        this.style.setProperty( 'background-color', '#2196F3', 'important' );
-      });
-
-  }
-  if ((water_lvl_perc==0) && (current_pump_status==false)){
+function handle_waterlvl_event(has_water){
+  if (!has_water){
     $("#waterlvl_message").css("display", "block");
     $("#my_button").attr('disabled','disabled');
    }
@@ -49,6 +30,11 @@ function handle_waterlvl_event(water_lvl_perc){
     $("#my_button").removeAttr('disabled');
   }
 }
+
+$.get("get_waterlvl", function(x){
+   handle_waterlvl_event(x);
+   }
+ )
 
 var cron_jobs;
 $.get("/cron_jobs",
@@ -90,20 +76,16 @@ function render_cron_schedule(schedule){
     $("#dom").attr("value", current_job.dom)
     $("#mon").attr("value", current_job.mon)
     $("#dow").attr("value", current_job.dow)
+    // now fill the values into the form!!
+    // change the submit button label!
   }
   )
-    $('[id^=delete]').click(function(event){
-      var form_idx = event.target.id.split(/[_]+/).pop();
-      var current_job = schedule[form_idx];
-      // ask for confirmation
-      // if confirmation then send post request to server to delete entry.
-  }
-  )
-  $('[id^=active_table]').on('change', function(event){
-      var form_idx = event.target.id.split(/[_]+/).pop();
-      var data = {idx:form_idx, checked: $("#" + event.target.id).prop('checked')}
-      $.post('/change_job_active', data)
-    })
+
+$('[id^=active_table]').on('change', function(event){
+    var form_idx = event.target.id.split(/[_]+/).pop();
+    var data = {idx:form_idx, checked: $("#" + event.target.id).prop('checked')}
+    $.post('/change_job_active', data)
+  })
 }
 
 var current_position=0;
@@ -199,18 +181,13 @@ $.get("/get_log_data",
    );
 
 $("#my_button").click(function(){
+   //$.get("/do_something",
+    //      function(x) {
+          //$("#resBtnHere").html(x);
+    //}
+   //)
     socket.emit('pump_switch_press');
-
-    if(!current_pump_status)  // and pump status is false!
-    {
-        $("#ProgressBarPercentage").animate({width:"100%"}, 10000, function () { $(this).removeAttr('style');}) 
-    }
-    else
-    {
-        $("#ProgressBarPercentage").stop()
-        $("#ProgressBarPercentage").removeAttr('style');
-    }
-    }
+  }
   );
 
 function openTab(evt, cityName) {

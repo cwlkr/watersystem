@@ -4,7 +4,7 @@
   <head>
       <title>Watersystem</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script src="{{ url_for('static', filename='jquery-3.3.1.js') }}"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -18,17 +18,9 @@
 </div>
 
 <div id="Pump Control" class="tabcontent" style="display: block">
-  <div id="watertank_lvl_div">
-    <p>Watertank fill level</p>
-    <div id="tank_bar_outer">
-      <div id="watertank_lvl"></div>
-    </div>
-  </div>
   <p id="waterlvl_message" style="display: none">Water level critical: pump control deactivated!</p>
-  <button type="button" class="btn btn-primary" id="my_button" disabled="disabled"> Click here</button>
-  <div>
-    <p> pump is running <span id="resBtnHere">wait</span> </p>
-    </div>
+  <button type="button" class="btn btn-primary" id="my_button" disabled="disabled"> Click here </button>
+  <p> pump is running <span id="resBtnHere">wait</span> </p>
 </div>
 
 <div id="Scheduler" class="tabcontent">

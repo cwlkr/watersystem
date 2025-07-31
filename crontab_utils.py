@@ -54,7 +54,7 @@ class CronTabHandler():
             return False
         
     def create_command(self, duration):
-        return f'/usr/bin/python /home/pi/watersystem/run_pump_remote.py -t {duration} >> /home/pi/out.txt  2>&1'
+        return f'/home/ws/watersysenv/bin/python /home/ws/watersys_server/run_pump_remote.py -t {duration} >> /home/ws/out.txt  2>&1'
     
     
     def set_enable_job(self, idx, set_active):
